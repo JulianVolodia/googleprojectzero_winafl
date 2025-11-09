@@ -1,0 +1,275 @@
+{
+  "microsoft_targets": {
+    "mspaint": {
+      "name": "Microsoft Paint",
+      "executable": "C:\\Windows\\System32\\mspaint.exe",
+      "target_module": "gdiplus.dll",
+      "target_offset": "0x1270",
+      "coverage_modules": ["gdiplus.dll", "WindowsCodecs.dll"],
+      "file_types": ["bmp", "png", "jpg", "gif", "tiff"],
+      "arguments": 2,
+      "timeout": 20000,
+      "iterations": 5000,
+      "priority": "high",
+      "notes": "Good beginner target. Focus on image parsing vulnerabilities."
+    },
+    "wordpad": {
+      "name": "WordPad",
+      "executable": "C:\\Program Files\\Windows NT\\Accessories\\wordpad.exe",
+      "target_module": "riched20.dll",
+      "target_offset": "0x0",
+      "coverage_modules": ["riched20.dll", "msftedit.dll"],
+      "file_types": ["rtf", "doc", "docx", "txt"],
+      "arguments": 2,
+      "timeout": 30000,
+      "iterations": 3000,
+      "priority": "high",
+      "notes": "RTF parser has history of vulnerabilities. Test with complex RTF documents."
+    },
+    "wmplayer": {
+      "name": "Windows Media Player",
+      "executable": "C:\\Program Files\\Windows Media Player\\wmplayer.exe",
+      "target_module": "wmp.dll",
+      "target_offset": "0x0",
+      "coverage_modules": ["wmp.dll", "wmvcore.dll", "msmpeg2vdec.dll"],
+      "file_types": ["wma", "wmv", "avi", "mp3", "mp4"],
+      "arguments": 2,
+      "timeout": 40000,
+      "iterations": 2000,
+      "priority": "high",
+      "notes": "Media parsing is complex. Good target for codec vulnerabilities."
+    },
+    "iexplore": {
+      "name": "Internet Explorer",
+      "executable": "C:\\Program Files\\Internet Explorer\\iexplore.exe",
+      "target_module": "mshtml.dll",
+      "target_offset": "0x0",
+      "coverage_modules": ["mshtml.dll", "jscript.dll", "vbscript.dll"],
+      "file_types": ["html", "htm", "js"],
+      "arguments": 2,
+      "timeout": 50000,
+      "iterations": 2000,
+      "priority": "medium",
+      "notes": "Complex target. Consider fuzzing specific JS engine functions."
+    },
+    "photoviewer": {
+      "name": "Windows Photo Viewer",
+      "executable": "C:\\Program Files\\Windows Photo Viewer\\PhotoViewer.dll",
+      "target_module": "PhotoViewer.dll",
+      "target_offset": "0x0",
+      "coverage_modules": ["PhotoViewer.dll", "gdiplus.dll", "WindowsCodecs.dll"],
+      "file_types": ["jpg", "jpeg", "png", "tiff", "gif"],
+      "arguments": 2,
+      "timeout": 25000,
+      "iterations": 4000,
+      "priority": "high",
+      "notes": "Image decoder vulnerabilities. Focus on exotic image formats."
+    },
+    "edge": {
+      "name": "Microsoft Edge (Legacy)",
+      "executable": "C:\\Windows\\SystemApps\\Microsoft.MicrosoftEdge_8wekyb3d8bbwe\\MicrosoftEdge.exe",
+      "target_module": "edgehtml.dll",
+      "target_offset": "0x0",
+      "coverage_modules": ["edgehtml.dll", "chakra.dll"],
+      "file_types": ["html", "htm", "js"],
+      "arguments": 2,
+      "timeout": 60000,
+      "iterations": 1000,
+      "priority": "high",
+      "notes": "Modern browser. Complex target. Consider fuzzing Chakra JS engine."
+    },
+    "fonts": {
+      "name": "Font Rendering (any app)",
+      "executable": "C:\\Windows\\System32\\notepad.exe",
+      "target_module": "gdi32.dll",
+      "target_offset": "0x0",
+      "coverage_modules": ["gdi32.dll", "atmfd.dll", "fontsub.dll"],
+      "file_types": ["ttf", "otf", "ttc"],
+      "arguments": 1,
+      "timeout": 15000,
+      "iterations": 5000,
+      "priority": "critical",
+      "notes": "Font parsing is system-wide. Vulnerabilities are high impact."
+    },
+    "explorer": {
+      "name": "Windows Explorer",
+      "executable": "C:\\Windows\\explorer.exe",
+      "target_module": "shell32.dll",
+      "target_offset": "0x0",
+      "coverage_modules": ["shell32.dll", "thumbcache.dll", "windowscodecs.dll"],
+      "file_types": ["lnk", "ico", "dll", "exe"],
+      "arguments": 1,
+      "timeout": 30000,
+      "iterations": 3000,
+      "priority": "critical",
+      "notes": "Shell vulnerabilities are critical. Focus on thumbnail generation."
+    }
+  },
+  "system_libraries": {
+    "gdiplus": {
+      "name": "GDI+ Image Library",
+      "module": "gdiplus.dll",
+      "description": "Windows image processing library",
+      "file_types": ["bmp", "png", "jpg", "gif", "tiff", "emf", "wmf"],
+      "priority": "high",
+      "notes": "Core Windows component. Vulnerabilities affect many applications."
+    },
+    "windowscodecs": {
+      "name": "Windows Imaging Component",
+      "module": "WindowsCodecs.dll",
+      "description": "Windows codec framework",
+      "file_types": ["png", "jpg", "tiff", "ico", "gif", "dds"],
+      "priority": "high",
+      "notes": "System-wide codec framework. High impact vulnerabilities."
+    },
+    "ole32": {
+      "name": "Object Linking and Embedding",
+      "module": "ole32.dll",
+      "description": "COM/OLE implementation",
+      "file_types": ["doc", "xls", "ppt", "ole"],
+      "priority": "critical",
+      "notes": "Core Windows component. Used by Office and many applications."
+    },
+    "urlmon": {
+      "name": "URL Moniker",
+      "module": "urlmon.dll",
+      "description": "URL parsing and handling",
+      "file_types": ["url", "html"],
+      "priority": "high",
+      "notes": "URL parsing vulnerabilities can lead to RCE."
+    },
+    "mshtml": {
+      "name": "HTML Rendering Engine",
+      "module": "mshtml.dll",
+      "description": "Internet Explorer rendering engine",
+      "file_types": ["html", "htm"],
+      "priority": "high",
+      "notes": "Complex HTML/CSS/JS parser. Many historical vulnerabilities."
+    },
+    "jscript": {
+      "name": "JScript Engine",
+      "module": "jscript.dll",
+      "description": "Legacy JavaScript engine",
+      "file_types": ["js", "html"],
+      "priority": "high",
+      "notes": "JavaScript engine. Focus on type confusion and UAF bugs."
+    }
+  },
+  "file_format_targets": {
+    "image_formats": {
+      "bmp": {
+        "extensions": [".bmp", ".dib"],
+        "targets": ["gdiplus.dll", "windowscodecs.dll"],
+        "sample_magic": "424D",
+        "complexity": "low",
+        "priority": "medium"
+      },
+      "png": {
+        "extensions": [".png"],
+        "targets": ["gdiplus.dll", "windowscodecs.dll", "libpng.dll"],
+        "sample_magic": "89504E47",
+        "complexity": "medium",
+        "priority": "high"
+      },
+      "jpg": {
+        "extensions": [".jpg", ".jpeg"],
+        "targets": ["gdiplus.dll", "windowscodecs.dll"],
+        "sample_magic": "FFD8FF",
+        "complexity": "high",
+        "priority": "high"
+      },
+      "gif": {
+        "extensions": [".gif"],
+        "targets": ["gdiplus.dll", "windowscodecs.dll"],
+        "sample_magic": "474946383961",
+        "complexity": "low",
+        "priority": "medium"
+      },
+      "tiff": {
+        "extensions": [".tif", ".tiff"],
+        "targets": ["windowscodecs.dll"],
+        "sample_magic": "49492A00",
+        "complexity": "high",
+        "priority": "high"
+      }
+    },
+    "document_formats": {
+      "rtf": {
+        "extensions": [".rtf"],
+        "targets": ["riched20.dll", "msftedit.dll"],
+        "sample_magic": "7B5C727466",
+        "complexity": "high",
+        "priority": "critical",
+        "notes": "RTF has complex parsing. History of RCE vulnerabilities."
+      },
+      "doc": {
+        "extensions": [".doc"],
+        "targets": ["wwlib.dll", "mso.dll"],
+        "sample_magic": "D0CF11E0A1B11AE1",
+        "complexity": "very high",
+        "priority": "critical",
+        "notes": "Requires MS Office. Very complex format."
+      }
+    },
+    "media_formats": {
+      "avi": {
+        "extensions": [".avi"],
+        "targets": ["quartz.dll", "wmvcore.dll"],
+        "sample_magic": "52494646",
+        "complexity": "high",
+        "priority": "high"
+      },
+      "wmv": {
+        "extensions": [".wmv", ".asf"],
+        "targets": ["wmvcore.dll"],
+        "sample_magic": "3026B2758E66CF11",
+        "complexity": "high",
+        "priority": "high"
+      },
+      "mp3": {
+        "extensions": [".mp3"],
+        "targets": ["l3codecx.ax"],
+        "sample_magic": "494433",
+        "complexity": "medium",
+        "priority": "medium"
+      }
+    },
+    "font_formats": {
+      "ttf": {
+        "extensions": [".ttf"],
+        "targets": ["atmfd.dll", "gdi32.dll"],
+        "sample_magic": "00010000",
+        "complexity": "very high",
+        "priority": "critical",
+        "notes": "Font vulnerabilities are kernel-level. Very high impact."
+      },
+      "otf": {
+        "extensions": [".otf"],
+        "targets": ["atmfd.dll"],
+        "sample_magic": "4F54544F",
+        "complexity": "very high",
+        "priority": "critical"
+      }
+    }
+  },
+  "fuzzing_strategies": {
+    "beginner": {
+      "targets": ["mspaint", "photoviewer"],
+      "duration": "24-48 hours",
+      "file_types": ["bmp", "png"],
+      "expected_results": "May find bugs in older Windows versions"
+    },
+    "intermediate": {
+      "targets": ["wordpad", "wmplayer"],
+      "duration": "3-7 days",
+      "file_types": ["rtf", "wmv", "avi"],
+      "expected_results": "Better chance of finding vulnerabilities"
+    },
+    "advanced": {
+      "targets": ["fonts", "explorer", "ole32"],
+      "duration": "2-4 weeks",
+      "file_types": ["ttf", "otf", "ole"],
+      "expected_results": "High-impact vulnerabilities possible"
+    }
+  }
+}
